@@ -1,0 +1,56 @@
+<div *ngIf="menuList">
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <ul class="nav nav-pills">
+      <li *ngFor="let menu of menuList" class="nav-item">
+        <div *ngIf="!menu.childMenus; else childMenuBlock">
+          <a class="nav-link" style="color: white;" routerLink='{{menu.path}}' routerLinkActive="active"
+            (click)=menuClick(menu.title)>{{menu.title}}
+          </a>
+        </div>
+        <ng-template #childMenuBlock>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" style="color: white;" data-toggle="dropdown" href="#">{{menu.title}}</a>
+        <div class="dropdown-menu">
+      <li *ngFor="let childMenu of menu.childMenus">
+        <a class="dropdown-item" routerLink='{{childMenu.path}}' routerLinkActive="active">{{childMenu.title}}</a>
+      </li>
+</div>
+</li>
+</ng-template>
+</li>
+</ul>
+</nav>
+</div>
+
+
+
+
+<div *ngIf="loginSuccess; else logOutBlock">
+  <div *ngIf="loginSuccess.loginResponse" style="color: green;">
+    <h3>Welcome To {{loginSuccess.loginResponse.userName }} , Your role has {{loginSuccess.loginResponse.role}}</h3>
+  </div>
+</div>
+<ng-template #logOutBlock>
+  <div style="color: red;">
+    <h3>{{logOutSuccess}}</h3>
+  </div>
+</ng-template>
+
+<div class="jumbotron jumbotron-fluid" style="margin-left:500px;height: 670px;width:600px;">
+  <div class="container">
+    <div *ngIf="!loginSuccess">
+      <app-login-view (eventEmit)="loginSuccess=($event);"></app-login-view>
+    </div>
+
+    <div *ngIf="loginSuccess">
+      <router-outlet></router-outlet>
+    </div>
+    <!---->
+
+    <!-- <div *ngIf="loginSuccess">
+        Welcome To {{loginSuccess.message}}
+        <h4>Wel {{loginSuccess | json}} </h4>
+      </div>
+     -->
+  </div>
+</div>

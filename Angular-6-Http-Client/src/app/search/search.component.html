@@ -1,0 +1,12 @@
+<div class="form-group">
+  <label for="search">Employee Name Search</label>
+  <input #searchBox id="search-box" (input)="search(searchBox.value)" class="form-control"/>
+
+  <ul class="search-result">
+      <li *ngFor="let hero of searchWord$ | async" >
+        
+          {{hero.firstname}}
+        
+      </li>
+    </ul>
+</div>
